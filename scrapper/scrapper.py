@@ -25,11 +25,7 @@ def handler(event, context):
         data.append({"_id": _id, "text": text})
 
     # make connection to s3
-    session = boto3.session.Session(
-        aws_access_key_id=os.environ["aws_access_key_id"], 
-        aws_secret_access_key=os.environ["aws_secret_access_key"], 
-        region_name=os.environ["region_name"]
-    )
+    session = boto3.session.Session()
     s3 = session.client(service_name="s3", endpoint_url="https://storage.yandexcloud.net")
 
     # overwrite data
@@ -43,5 +39,5 @@ def handler(event, context):
             'Content-Type': 'text/plain'
         },
         'isBase64Encoded': False,
-        'body': 'Downloaded from {}:\n{}\n\nS3:{}\n'.format(url, storage_data, str(s3_response))
+        'body': 'Downloaded {} from {}: {}'.format(str(len(storage_data)), url, str(s3_response))
     }
