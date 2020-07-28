@@ -2,9 +2,6 @@ import json
 import boto3
 
 def handler(event, context):
-    # parse event
-    query = json.loads(event['body'])
-
     # make connection to s3
     session = boto3.session.Session()
     s3 = session.client(service_name="s3", endpoint_url="https://storage.yandexcloud.net")
@@ -31,12 +28,7 @@ def handler(event, context):
 
     # return successul result
     return json.dumps({
-        "statusCode": 200,
-        "headers": {"Content-Type": "application/json"},
-        "isBase64Encoded": False,
-        "body": {
-            "response": {"text": "\n\n".join(text_body), "end_session": True},
-            "session": query['session'],
-            "version": query['version'],
-        },
+        "response": {"text": "\n\n".join(text_body), "end_session": True},
+        "session": event["session"],
+        "version": event["version"],
     })
