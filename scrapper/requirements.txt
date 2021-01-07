@@ -4,7 +4,7 @@
 boto3 == 1.14.28
 
 # scrapper/scrapper.py: 5
-lxml == 4.4.2
+lxml == 4.6.2
 
 # scrapper/scrapper.py: 4
 requests == 2.22.0
